@@ -1,28 +1,28 @@
 //  eslint-disable jsx-a11y/accessible-emoji
-import React, { useState } from "react";
-import "./App.scss";
+import React, { useState } from 'react';
+import './App.scss';
 
-import usersFromServer from "./api/users";
-import categoriesFromServer from "./api/categories";
-import productsFromServer from "./api/products";
-import { ProductList } from "./components/productList";
+import usersFromServer from './api/users';
+import categoriesFromServer from './api/categories';
+import productsFromServer from './api/products';
+import { ProductList } from './components/productList';
 
 function getUserById(id) {
-  return usersFromServer.find((user) => user.id === id);
+  return usersFromServer.find(user => user.id === id);
 }
 
 function getCategoriesById(id) {
-  return categoriesFromServer.find((categories) => categories.id === id);
+  return categoriesFromServer.find(categories => categories.id === id);
 }
 
-const products = productsFromServer.map((product) => ({
+const products = productsFromServer.map(product => ({
   ...product,
   user: getUserById(product.id), // ownerId don't work
   categories: getCategoriesById(product.categoryId),
 }));
 
 export const App = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   const visibleFilter = [...products];
 
@@ -30,11 +30,10 @@ export const App = () => {
     const normalizeQuery = query.toLowerCase().trim();
 
     return visibleFilter.filter(
-      (product) =>
-        (product.user &&
+      product => (product.user &&
           product.user.name.toLowerCase().includes(normalizeQuery)) ||
         product.categories.title.toLowerCase().includes(normalizeQuery) ||
-        product.name.toLowerCase().includes(normalizeQuery)
+        product.name.toLowerCase().includes(normalizeQuery),
     );
   };
 
